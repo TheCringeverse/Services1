@@ -1,11 +1,29 @@
 openapi: 3.0.3
 info:
   title: Gilmore's Glorious Goods
-  version: 0.0.0
+  version: 0.0.1
 paths: 
-    
-  /product:
-    put:
+        
+  /products:
+    get:
+      summary: Get product list
+      description: Returns a list of products that can be filtered, sorted and paged
+      tags:
+        - service 1
+      parameters:
+        - $ref: '#/components/parameters/Sorting'
+        - $ref: '#/components/parameters/Filtering'
+        - $ref: '#/components/parameters/Paging'
+      responses:
+        '200':
+          description: Successful operation. Returns an array of products.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+        '405':
+          description: Validation exception
+    patch:
       summary: Update a product
       description: Updates an existing product by its Id
       tags:
@@ -49,8 +67,9 @@ paths:
                 $ref: '#/components/schemas/Product'
         '405':
           description: Validation exception
-    
-  /product/{id}:
+
+          
+  /products/{id}:
     get:
       summary: Find product by ID
       description: Returns a single product by its ID
@@ -97,27 +116,8 @@ paths:
         '404':
           description: Product not found
           
-  /products:
-    get:
-      summary: Get every product
-      description: Returns a list of products that can be filtered, sorted and paged
-      tags:
-        - service 1
-      parameters:
-        - $ref: '#/components/parameters/Sorting'
-        - $ref: '#/components/parameters/Filtering'
-        - $ref: '#/components/parameters/Paging'
-      responses:
-        '200':
-          description: Successful operation. Returns an array of products.
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ProductList'
-        '405':
-          description: Validation exception
     
-  /products/{unitOfMeasure}:
+  /products/byUnitOfMeasure/{unitOfMeasure}:
     delete:
       summary: Delete products by unit of measure
       description: Deletes every product that uses a specified unit of measure
@@ -293,12 +293,12 @@ components:
         x: 
           type: integer
           format: int64
-          example: 150
+          example: 45
         y: 
           type: integer
           format: int64
           maximum: 716
-          example: 150
+          example: 15
      
     Organization:
       type: object
