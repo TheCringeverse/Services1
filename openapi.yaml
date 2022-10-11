@@ -1,15 +1,17 @@
 openapi: 3.0.3
 info:
-  title: Gilmore's Glorious Goods
-  version: 0.0.1
+  title: Gilmore's Glorious Goods - Warehouse
+  version: 0.0.2
+servers:
+  - url: https://se.ifmo.ru/~s270245/storage/api/v3
 paths: 
-        
+
   /products:
     get:
       summary: Get product list
       description: Returns a list of products that can be filtered, sorted and paged
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - $ref: '#/components/parameters/Sorting'
         - $ref: '#/components/parameters/Filtering'
@@ -27,7 +29,7 @@ paths:
       summary: Update a product
       description: Updates an existing product by its Id
       tags:
-        - service 1
+        - Warehouse
       requestBody:
         content:
           application/xml:
@@ -51,7 +53,7 @@ paths:
       summary: Add a new product 
       description: Creates and adds a new product
       tags:
-        - service 1
+        - Warehouse
       requestBody:
         content:
           application/xml:
@@ -68,13 +70,13 @@ paths:
         '405':
           description: Validation exception
 
-          
+
   /products/{id}:
     get:
       summary: Find product by ID
       description: Returns a single product by its ID
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - name: id
           in: path
@@ -99,7 +101,7 @@ paths:
       summary: Remove product by ID
       description: Deletes a product by its ID
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - name: id
           in: path
@@ -121,7 +123,7 @@ paths:
       summary: Delete products by unit of measure
       description: Deletes every product that uses a specified unit of measure
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - name: unitOfMeasure
           in: path
@@ -144,7 +146,7 @@ paths:
       summary: Count products which exeed unit of measure
       description: Count products with a greater unit of measure value than the one specified
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - name: unitOfMeasure
           in: path
@@ -167,7 +169,7 @@ paths:
       summary: Count products with set manufacture cost
       description: Count products that match a specified manufacture cost
       tags:
-        - service 1
+        - Warehouse
       parameters:
         - name: manufactureCost
           in: path
@@ -182,58 +184,6 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Count'
-        '405':
-          description: Validation exception
-
-    
-  /ebay/filter/price/{price-from}/{price-to}:
-    get:
-      summary: Get products in a price range
-      description: Returns a list of products that fall in a specified price range
-      tags:
-        - service 2
-      parameters:
-        - name: price-from
-          in: path
-          description: Lowest price
-          required: true
-          schema:
-            $ref: '#/components/schemas/Price'
-        - name: price-to
-          in: path
-          description: Highest price
-          required: true
-          schema:
-            $ref: '#/components/schemas/Price'
-      responses:
-        '200':
-          description: Successful operation. Returns an array of products.
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ProductList'
-        '405':
-          description: Validation exception
-     
-  /ebay/price/decrease/{decrease-percent}:
-    post:
-      summary: Decrease every product's price
-      description: Decreases the price of every product by a specified amount, in percentages 
-      tags:
-        - service 2
-      parameters:
-        - name: decrease-percent
-          in: path
-          description: Decrease percent
-          required: true
-          schema:
-            type: number
-            format: float
-            minimum: 0
-            maximum: 100
-      responses:
-        '200':
-          description: Successful operation
         '405':
           description: Validation exception
 
