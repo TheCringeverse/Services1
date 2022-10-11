@@ -114,10 +114,9 @@ paths:
         '400':
           description: Invalid ID supplied
         '404':
-          description: Product not found
-          
+          description: Product not found          
     
-  /products/byUnitOfMeasure/{unitOfMeasure}:
+  /products/unit-of-measure/{unitOfMeasure}:
     delete:
       summary: Delete products by unit of measure
       description: Deletes every product that uses a specified unit of measure
@@ -139,8 +138,31 @@ paths:
                 $ref: '#/components/schemas/Count'
         '405':
           description: Validation exception
+    
+  /products/unit-of-measure/{unitOfMeasure}/countGreater:
+    get:
+      summary: Count products which exeed unit of measure
+      description: Count products with a greater unit of measure value than the one specified
+      tags:
+        - service 1
+      parameters:
+        - name: unitOfMeasure
+          in: path
+          description: Unit of measure value to exceed
+          required: true
+          schema:
+            $ref: '#/components/schemas/UnitOfMeasure'
+      responses:
+        '200':
+          description: Successful operation. Returns product count
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Count'
+        '405':
+          description: Validation exception    
           
-  /products/countEquals/{manufactureCost}:
+  /products/manufacture-cost/{manufactureCost}/count:
     get:
       summary: Count products with set manufacture cost
       description: Count products that match a specified manufacture cost
@@ -162,30 +184,7 @@ paths:
                 $ref: '#/components/schemas/Count'
         '405':
           description: Validation exception
-    
-  /products/countGreater/{unitOfMeasure}:
-    get:
-      summary: Count products which exeed unit of measure
-      description: Count products with a greater unit of measure value than the one specified
-      tags:
-        - service 1
-      parameters:
-        - name: unitOfMeasure
-          in: path
-          description: Unit of measure value to exceed
-          required: true
-          schema:
-            $ref: '#/components/schemas/UnitOfMeasure'
-      responses:
-        '200':
-          description: Successful operation. Returns product count
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Count'
-        '405':
-          description: Validation exception
-    
+
     
   /ebay/filter/price/{price-from}/{price-to}:
     get:
